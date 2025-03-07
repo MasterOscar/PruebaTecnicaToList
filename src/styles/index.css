@@ -1,0 +1,125 @@
+/* 🔹 Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* 🔹 Contenedor principal */
+  .container {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    text-align: center;
+  }
+  
+  /* 🔹 Título */
+  h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  h1 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* 🔹 Formulario de login y tareas */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* 🔹 Inputs */
+  input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  /* 🔹 Botones */
+  button {
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  button:hover {
+    background: #0056b3;
+  }
+  
+  /* 🔹 Lista de tareas */
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    background: #000000;
+    margin: 8px 0;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* 🔹 Botones de tarea */
+  .task-buttons {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .task-buttons button {
+    background: #28a745;
+  }
+  
+  .task-buttons button:hover {
+    background: #218838;
+  }
+  
+  .task-buttons .delete {
+    background: #dc3545;
+  }
+  
+  .task-buttons .delete:hover {
+    background: #c82333;
+  }
+  
+  /* 🔹 Tareas completadas */
+  .completed {
+    text-decoration: line-through;
+    color: #6c757d;
+  }
+  
+  .logout-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-bottom: 15px;
+  }
+  
+  .logout-button:hover {
+    background-color: #c82333;
+  }
+  
