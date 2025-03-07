@@ -2,40 +2,54 @@ import { createContext, useState, useEffect, ReactNode } from "react";
 import { login } from "../services/api";
 
 interface AuthContextType {
-  token: string;
-  loginUser: (email: string) => Promise<void>;
+  token: string | null;
+  userEmail: string | null;
+  loginUser: (email: string) => Promise<boolean>;
   logout: () => void;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [token, setToken] = useState<string>(() => localStorage.getItem("token") || "");
+  const [token, setToken] = useState<string | null>(() => localStorage.getItem("token"));
+  const [userEmail, setUserEmail] = useState<string | null>(() => localStorage.getItem("userEmail"));
 
   useEffect(() => {
     if (token) {
       localStorage.setItem("token", token);
+      if (userEmail) {
+        localStorage.setItem("userEmail", userEmail);
+      }
+    } else {
+      localStorage.removeItem("token");
+      localStorage.removeItem("userEmail");
     }
-  }, [token]);
+  }, [token, userEmail]);
 
-  const loginUser = async (email: string) => {
+  const loginUser = async (email: string): Promise<boolean> => {
     try {
       const data = await login(email);
-      if (data.data.token) {
+
+      if (data.data && data.data.token) {
         setToken(data.data.token);
-        localStorage.setItem("token", data.data.token);
+        setUserEmail(email); // Guarda el email del usuario autenticado
+        return true;
       } else {
-        throw new Error("Token inválido");
+        return false; // Si la API no devuelve un token válido, el login falla
       }
     } catch (error) {
-      throw new Error("Error en la autenticación");
+      return false; // Si hay un error en la API, el login falla
     }
   };
 
   const logout = () => {
-    setToken("");
-    localStorage.removeItem("token"); // Borra el token del almacenamiento local
+    setToken(null);
+    setUserEmail(null);
   };
 
-  return <AuthContext.Provider value={{ token, loginUser, logout }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ token, userEmail, loginUser, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };

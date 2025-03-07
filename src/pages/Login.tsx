@@ -1,12 +1,14 @@
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  if (!authContext) return null; // Verifica que el contexto está disponible
+  if (!authContext) return null;
   const { loginUser } = authContext;
 
   const validateEmail = (email: string): boolean => {
@@ -27,10 +29,11 @@ const Login = () => {
       return;
     }
 
-    try {
-      await loginUser(email);
-    } catch (error) {
-      setError("Error al iniciar sesión. Verifique el correo.");
+    const loginSuccess = await loginUser(email);
+    if (loginSuccess) {
+      navigate("/"); // Redirige a Home si el login fue exitoso
+    } else {
+      setError("El correo ingresado no está registrado.");
     }
   };
 

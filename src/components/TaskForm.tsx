@@ -10,16 +10,25 @@ const TaskForm = ({ refreshTasks }: TaskFormProps) => {
   const [title, setTitle] = useState<string>("");
   const authContext = useContext(AuthContext);
 
-  if (!authContext) return null; // Verifica que el contexto está disponible
-  const { token } = authContext;
+  if (!authContext) return null;
+  const { token, userEmail } = authContext;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim()) return; // Evita agregar tareas vacías
+    if (!title.trim()) return;
 
-    await createTask(token, { user_email: "test@gmail.com", title });
-    setTitle(""); // Limpia el input después de agregar la tarea
-    refreshTasks(); // Recarga la lista de tareas
+    if (!userEmail) {
+      alert("Error: No hay un usuario autenticado.");
+      return;
+    }
+
+    if (token) {
+      await createTask(token, { user_email: userEmail, title });
+    } else {
+      alert("Error: No se pudo obtener el token de autenticación.");
+    }
+    setTitle("");
+    refreshTasks();
   };
 
   return (

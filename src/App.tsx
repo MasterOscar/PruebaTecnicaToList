@@ -1,27 +1,29 @@
-import { useContext } from "react";
+import { JSX, useContext } from "react";
 import { AuthProvider, AuthContext } from "./context/AuthContext";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import "./styles/index.css";
 
-const AppContent = () => {
+const PrivateRoute = ({ children }: { children: JSX.Element }) => {
   const authContext = useContext(AuthContext);
 
-  if (!authContext) return null; // Verifica que el contexto está disponible
+  if (!authContext) return null;
 
-  const { token } = authContext;
-
-  return (
-    <div className="container">
-      {token ? <Home /> : <Login />} {/* Muestra Login si no hay token */}
-    </div>
-  );
+  return authContext.token ? children : <Navigate to="/login" />;
 };
 
 const App = () => {
   return (
     <AuthProvider>
-      <AppContent />
+      <Router>
+        <div className="container">
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+          </Routes>
+        </div>
+      </Router>
     </AuthProvider>
   );
 };
