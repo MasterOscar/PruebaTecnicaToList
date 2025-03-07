@@ -5,16 +5,6 @@
 
 ---
 
-## 📂 **Índice**
-- [🛠️ Tecnologías](#-tecnologías)
-- [📥 Instalación](#-instalación)
-- [🚀 Cómo ejecutar](#-cómo-ejecutar)
-- [🛠️ Configuración](#-configuración)
-- [📜 Endpoints de la API](#-endpoints-de-la-api)
-- [📄 Licencia](#-licencia)
-
----
-
 ## 🛠️ **Tecnologías**
 Este proyecto utiliza las siguientes tecnologías:
 - ⚡ **Vite** (React + TypeScript)
@@ -38,7 +28,7 @@ cd todo-list-app
 # 3️⃣ Instalar las dependencias
 npm install
 
-🚀 Cómo ejecutar
+## 🚀 **Cómo ejecutar
 Ejecuta el siguiente comando para iniciar la aplicación en modo desarrollo:
 
 sh
