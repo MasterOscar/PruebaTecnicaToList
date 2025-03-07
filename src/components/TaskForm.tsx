@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { createTask } from "../services/api";
 import { AuthContext } from "../context/AuthContext";
+import { isValidToken } from "../utils";
 
 interface TaskFormProps {
   refreshTasks: () => void;
@@ -11,21 +12,21 @@ const TaskForm = ({ refreshTasks }: TaskFormProps) => {
   const authContext = useContext(AuthContext);
 
   if (!authContext) return null;
-  const { token, userEmail } = authContext;
+  const { token } = authContext;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim()) return;
 
-    if (!userEmail) {
-      alert("Error: No hay un usuario autenticado.");
+    if (!isValidToken(token)) {
+      alert("Error: Token inválido. Inicia sesión nuevamente.");
       return;
     }
 
     if (token) {
-      await createTask(token, { user_email: userEmail, title });
+      await createTask(token, { user_email: "test@gmail.com", title }); // Usa un email genérico o el que requiera la API
     } else {
-      alert("Error: No se pudo obtener el token de autenticación.");
+      alert("Error: Token inválido. Inicia sesión nuevamente.");
     }
     setTitle("");
     refreshTasks();
